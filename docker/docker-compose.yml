@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+          auth_service:
+                      build:
+                                    context: .
+                                          dockerfile: docker/Dockerfile
+                                              ports:
+                                                            - "8000:8000"
+                                                                data_service:
+                                                                            build:
+                                                                                          context: .
+                                                                                                dockerfile: docker/Dockerfile
+                                                                                                    ports:
+                                                                                                                  - "8001:8000"
+                                                                                                                        command: uvicorn src.data.main:app --host 0.0.0.0 --port 8001
+                                                                                                                          notification_service:
+                                                                                                                                      build:
+                                                                                                                                                    context: .
+                                                                                                                                                          dockerfile: docker/Dockerfile
+                                                                                                                                                              ports:
+                                                                                                                                                                            - "8002:8000"
+                                                                                                                                                                                  command: uvicorn src.notifications.main:app --host 0.0.0.0 --port 8002
